@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mb-5">
         <div class="row m-5">
 
             <div class="col offset-3 col-lg-6">
@@ -19,6 +19,16 @@
                 <tr>
                     <th scope="row">Temperature</th>
                     <td>{{Math.round((((this.currentWeather.main.temp - 273.15) * 9) / 5) + 32) }} &#8457;</td>
+                   
+                </tr>
+                <tr>
+                    <th scope="row">Low Temperature</th>
+                    <td>{{Math.round((((this.currentWeather.main.temp_min - 273.15) * 9) / 5) + 32) }} &#8457;</td>
+                   
+                </tr>
+                 <tr>
+                    <th scope="row">High Temperature</th>
+                    <td>{{Math.round((((this.currentWeather.main.temp_max - 273.15) * 9) / 5) + 32) }} &#8457;</td>
                    
                 </tr>
                  <tr>

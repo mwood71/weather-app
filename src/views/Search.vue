@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-4">
+    <div class="container mt-4 mb-5">
 
         <!-- beginning of main display div -->
         <div v-if="mainDisplay">
@@ -13,16 +13,17 @@
                         <input v-model="searchString" type="text" class="form-control" id="searchInput"
                             placeholder="Search City Name">
                     </div>
-                    <button @click="submit" type="submit" class="btn btn-primary mb-2">Search</button>
+                    <button @click="submit" type="submit" class="btn btn-success mb-2">Search</button>
                 </form>
             </div>
 
             <!-- successful search -->
             <div v-if="!error && hasSearched">
+                <button @click="newSearch" class="button mt-4 mb-5">New Search</button>
                 <p>Select which forecast you would like to see for {{this.searchString}}</p>
                 <button @click="current" class="btn btn-primary m-2">Current</button>
                 <button @click="hourly" class="btn btn-secondary m-2">Hourly</button>
-                <button @click="daily" class="btn btn-success m-2">Daily</button>
+                <button @click="daily" class="btn btn-dark m-2">Daily</button>
             </div>
 
             <!-- unsuccessful search -->
@@ -35,13 +36,13 @@
         </div>
 
     <!-- div for current weather -->
-    <div v-if="showCurrent"> <currentWeather :currentWeather="currentWeather"></currentWeather> <button class="btn btn-secondary" @click="backToMain">Back To Main</button></div>
+    <div v-if="showCurrent"> <currentWeather :currentWeather="currentWeather"></currentWeather> <button class="btn btn-success" @click="backToMain">Back To Main</button></div>
 
     <!-- div for hourly weather -->
-    <div v-if="showHourly">Hourly <button class="btn btn-secondary" @click="backToMain">Back to Main</button></div>
+    <div v-if="showHourly"><hourlyWeather :hourlyWeather="hourlyWeather"></hourlyWeather> <button class="btn btn-success" @click="backToMain">Back to Main</button></div>
 
     <!-- div for daily weather -->
-    <div v-if="showDaily">Daily <button class="btn btn-secondary" @click="backToMain">Back to Main</button></div>
+    <div v-if="showDaily"><dailyWeather :dailyWeather="dailyWeather"></dailyWeather><button class="btn btn-success mb-5" @click="backToMain">Back to Main</button></div>
 
 
         
@@ -52,6 +53,8 @@
 <script>
     import {mapState} from 'vuex'
     import currentWeather from '../components/currentWeather'
+    import hourlyWeather from '../components/hourlyWeather'
+    import dailyWeather from '../components/dailyWeather'
 
     export default {
         name: "Search",
@@ -70,11 +73,21 @@
 
         },
         components: {
-            currentWeather
+            currentWeather,
+            hourlyWeather,
+            dailyWeather
 
         },
 
         methods: {
+
+            newSearch(){
+
+                this.hasSearched = false
+                this.searchString = ""
+
+            },
+
             submit: function () {
 
                 if (this.searchString === '') {
@@ -82,6 +95,8 @@
                 } else {
                     this.blankError = false
                     this.$store.dispatch('searchCity', this.searchString)
+                    this.$store.dispatch('searchHourly', this.searchString)
+                    this.$store.dispatch('searchDaily', this.searchString)
                     setTimeout(() => this.hasSearched = true, 1000);
                 }
 
@@ -112,6 +127,8 @@
         computed: {
             ...mapState(['error']),
             ...mapState(['currentWeather']),
+            ...mapState(['hourlyWeather']),
+            ...mapState(['dailyWeather']),
 
         },
 
@@ -122,5 +139,16 @@
 <style scoped>
     .warning {
         color: red;
+    }
+     .button {
+    
+            background-color: Transparent;
+            background-repeat:no-repeat;
+            border: none;
+            cursor:pointer;
+            overflow: hidden;
+            outline:none;
+            text-decoration: underline;
+
     }
 </style>
