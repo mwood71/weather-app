@@ -50,10 +50,15 @@
     mounted(){
         for (let x = 0; x < this.individualDayArray.length; x++){
 
+            console.log(this.individualDayArray[x].dt_txt)
+
+ 
+
 
             if (x === 0){
 
-                this.individualDayArray[x].dt = new Date(this.individualDayArray[x].dt_txt).toLocaleTimeString('en-US')
+
+                this.individualDayArray[x].dt = this.individualDayArray[x].dt_txt.toLocaleTimeString('en-US')
 
             }
             else{
