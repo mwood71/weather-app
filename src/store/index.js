@@ -10,7 +10,8 @@ export default new Vuex.Store({
     currentWeather: {},
     error: false,
     hourlyWeather: [],
-    dailyWeather: []
+    dailyWeather: [],
+    dateChange: true
   },
   mutations: {
     SET_CURRENT_WEATHER(state, currentWeather) {
@@ -25,6 +26,12 @@ export default new Vuex.Store({
     },
     SET_DAILY_WEATHER(state, dailyWeather) {
       state.dailyWeather = dailyWeather;
+    },
+    SET_MAKE_FALSE(state) {
+      state.dateChange = false;
+    },
+    SET_MAKE_TRUE(state) {
+      state.dateChange = true;
     },
   },
   actions: {
@@ -91,6 +98,22 @@ export default new Vuex.Store({
 
 
     },
+    makeFalse({
+      commit
+    }) {
+
+      commit('SET_MAKE_FALSE')
+
+
+    },
+    makeTrue({
+      commit
+    }) {
+
+      commit('SET_MAKE_TRUE')
+
+
+    }
   
 },
 

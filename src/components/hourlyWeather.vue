@@ -28,6 +28,7 @@
 <script>
 
     import hourlyWeatherDay from './hourlyWeatherDay'
+  
 
     export default {
 
@@ -78,12 +79,15 @@
             for (let x = 0; x < this.hourlyWeather.length; x++){
 
                 // this.dailyWeather[x].sunrise = new Date(this.dailyWeather[x].dt * 1000).toDateString()
+                
     
-                this.hourlyWeather[x].dt_txt = this.hourlyWeather[x].dt_txt.replace(' ', 'T')
-            
-
-                this.hourlyWeather[x].dt_txt = new Date(this.hourlyWeather[x].dt_txt)
-                this.hourlyWeather[x].dt_txt.setHours(this.hourlyWeather[x].dt_txt.getHours() - 5);
+                if (this.$store.state.dateChange){
+                    this.hourlyWeather[x].dt_txt = this.hourlyWeather[x].dt_txt.replace(' ', 'T')
+                    this.hourlyWeather[x].dt_txt = new Date(this.hourlyWeather[x].dt_txt)
+                    this.hourlyWeather[x].dt_txt.setHours(this.hourlyWeather[x].dt_txt.getHours() - 5);
+                    
+                }
+              
 
                 
                 if (this.hourlyWeather[x].dt_txt.getDate() != date.getDate()){
@@ -117,6 +121,7 @@
             }
 
             this.daysArray = daysArray
+            console.log(this.daysArray)
            
         
         }

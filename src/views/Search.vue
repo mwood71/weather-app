@@ -39,7 +39,7 @@
     <div v-if="showCurrent"> <currentWeather :currentWeather="currentWeather"></currentWeather> <button class="btn btn-success" @click="backToMain">Back To Main</button></div>
 
     <!-- div for hourly weather -->
-    <div v-if="showHourly"><hourlyWeather :hourlyWeather="hourlyWeather"></hourlyWeather> <button class="btn btn-success" @click="backToMain">Back to Main</button></div>
+    <div v-if="showHourly"><hourlyWeather :hourlyWeather="hourlyWeather"></hourlyWeather> <button class="btn btn-success" @click="backToMainHourly">Back to Main</button></div>
 
     <!-- div for daily weather -->
     <div v-if="showDaily"><dailyWeather :dailyWeather="dailyWeather"></dailyWeather><button class="btn btn-success mb-5" @click="backToMain">Back to Main</button></div>
@@ -98,6 +98,7 @@
                     this.$store.dispatch('searchHourly', this.searchString)
                     this.$store.dispatch('searchDaily', this.searchString)
                     setTimeout(() => this.hasSearched = true, 1000);
+                    this.$store.dispatch('makeTrue')
                 }
 
             },
@@ -122,7 +123,15 @@
                 this.showDaily = false
                 this.showCurrent = false
                 this.showHourly = false
+            },
+            backToMainHourly: function(){
+                this.$store.dispatch('makeFalse')
+                this.mainDisplay = true
+                this.showDaily = false
+                this.showCurrent = false
+                this.showHourly = false
             }
+
         },
         computed: {
             ...mapState(['error']),
